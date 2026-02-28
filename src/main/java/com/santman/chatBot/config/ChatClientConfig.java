@@ -16,7 +16,7 @@ import java.util.List;
 public class ChatClientConfig {
     @Bean
     ChatMemory chatMemory(JdbcChatMemoryRepository jdbcChatMemoryRepository) {
-        return MessageWindowChatMemory.builder().maxMessages(10)
+        return MessageWindowChatMemory.builder().maxMessages(20)
                 .chatMemoryRepository(jdbcChatMemoryRepository).build();
     }
     @Bean()

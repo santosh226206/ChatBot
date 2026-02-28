@@ -1,12 +1,9 @@
 package com.santman.chatBot.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-
+import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 @RestController()
 @RequestMapping("/api")
 public class ChatBot {
@@ -28,5 +25,9 @@ public class ChatBot {
     """;
 //        return this.chatClient.prompt().system(systemText).user(query).stream().content();
         return this.chatClient.prompt().user(query).stream().content();
+    }
+    @RequestMapping("/v1/chat")
+    String simpleCaht(@RequestHeader("userName") String userName, @RequestParam("query") String query){
+        return this.chatClient.prompt().user(query).advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID,userName)).call().content();
     }
 }
